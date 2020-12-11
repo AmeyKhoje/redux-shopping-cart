@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux';
 import * as actionType from '../store/actions';
+import 'react-toastify/dist/ReactToastify.css';
+import Toast from '../components/Toast/Toast'
+import './Demo1.scss';
+import { AuthContext } from '../context/context'
+
 
 const Demo1 = (props) => {
     const [ addedToCart, setAddedToCart ] = useState(false)
+
+    const [ toastShow, setToastShow ] = useState(false)
+
+    const contextMode = useContext(AuthContext);
+
     const prodStyle = {
         padding: '20px 10px',
         width: '25%',
@@ -43,49 +54,92 @@ const Demo1 = (props) => {
             name: 'One Plus Mobile',
             price: '50000',
             img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQwYNLRJHnP4Y7cG9gOXbEYKkLtfVDuVzh8Yg&usqp=CAU',
-            count: 0,
-            countt: []
+            countt: [0],
+            get count() {
+                return this.countt.length
+            }
         },
         {
             id: 2,
             name: 'One Plus Mobile 1',
             price: '55000',
             img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQwYNLRJHnP4Y7cG9gOXbEYKkLtfVDuVzh8Yg&usqp=CAU',
-            count: 0,
-            countt: []
+            countt: [0],
+            get count() {
+                return this.countt.length
+            }
         },
         {
             id: 3,
             name: 'One Plus Mobile 2',
             price: '59000',
             img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQwYNLRJHnP4Y7cG9gOXbEYKkLtfVDuVzh8Yg&usqp=CAU',
-            count: 0,
-            countt: []
+            countt: [0],
+            get count() {
+                return this.countt.length
+            }
+        },
+        {
+            id: 4,
+            name: 'One Plus Mobile 3',
+            price: '65000',
+            img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQwYNLRJHnP4Y7cG9gOXbEYKkLtfVDuVzh8Yg&usqp=CAU',
+            countt: [0],
+            get count() {
+                return this.countt.length
+            }
         }
     ]
 
+    products.map (prod => {
+        console.log(prod.cout);
+    })
+
     console.log(props.prod);
+    let text = ''
+    const handleAddToCart = (product) => {
+        setToastShow(true)
+        props.onIncHandler(product)
+    }
+
+    const toast_class = toastShow ? 'show' : 'hide'
+
+    const darkClass = contextMode.isDark ? 'home-dark' : 'home-light'
+
+    const darkProd = contextMode.isDark ? 'prod-dark' : 'prod-light'
 
     return (
-        <div style={{ padding: '110px 30px 30px 30px' }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+        <div className={` home-page ${darkClass} `}>
+            <p>
+                {
+                    props.falseRes ? ( props.res && <Toast show Text={`${props.res}`} />) : (props.res && <Toast show Text={`${props.res}`} />)
+                }
+            </p>
+            <div className="products-row">
                 {
                     products.map(product => (
-                        <div style={prodStyle}>
-                            <img style={prodImg} src={product.img} />
-                            <div>
-                                <p style={textStyle}>{product.name}</p>
-                            </div>
-                            <div>
-                                <p style={textStyle}>{product.price}</p>
-                            </div>
-                            <div>
-                                <button style={btnStyle} onClick={() => props.onIncHandler(product)}>Add To cart</button>
+                        <div className={` product-card ${darkProd} `} key={product.id}>
+                            <img src={product.img} />
+                            <div className="product-card_cont">
+                                <div>
+                                    <h5 className="product-name">{product.name}</h5>
+                                </div>
+                                <div>
+                                    <p className="product-price"><span>Price: </span>{product.price}</p>
+                                </div>
+                                <div>
+                                    <button className="cart-btn" onClick={() => handleAddToCart(product)}>
+                                        {
+                                            !addedToCart ? 'Add To cart' : 'Added To Cart'
+                                        }
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))
                 }
             </div>
+            <ToastContainer />
         </div>
     )
 }
@@ -93,14 +147,15 @@ const Demo1 = (props) => {
 const mapStateToProps = state => {
     return {
         ctr: state.count,
-        prod: state.products
+        prod: state.products,
+        falseRes: state.falseAction,
+        res: state.res
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onIncHandler: (product) => {
-            // console.log(id);
             dispatch({ type: actionType.INCREMENT, payload: product })
         }
     }

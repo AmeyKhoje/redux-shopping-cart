@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actionType from '../store/actions'
+import * as actionType from '../store/actions';
+import { AuthContext } from '../context/context';
+import './Cart.scss'
 
 const Cart = (props) => {
     const [products, setProducts] = useState(props.prod)
     const [checkProd, setCheckProd] = useState([])
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(1)
+    const darkContext = useContext(AuthContext)
     console.log(products);
     const prodStyle = {
         padding: '20px 10px',
@@ -68,14 +71,15 @@ const Cart = (props) => {
 
     const btnCheckout = {
         padding: '8px 40px',
-        margin: '5px auto',
+        margin: '10px auto',
         border: 'none',
         borderRadius: '3px',
-        boxShadow: '3px 3px 12px rgba(0,0,0,0.2), -3px -3px 10px rgba(255, 255, 55, 0.5)',
+        boxShadow: '3px 3px 12px rgba(0,0,0,0.2), -3px -3px 10px rgba(255, 255, 255, 0.2)',
         backgroundColor: 'slategrey',
         fontSize: '18px',
         fontWeight: '600',
-        color: '#fff'
+        color: '#fff',
+        textDecoration: 'none'
     }
 
     const headText = {
@@ -106,36 +110,41 @@ const Cart = (props) => {
         }
     }
 
+    const darkClass = darkContext.isDark ? 'home-dark' : 'home-light'
+
+    const darkProd = darkContext.isDark ? 'prod-dark' : 'prod-light'
 
     return (
-        <>
-            <div style={{ display: 'flex', padding: '110px 20px 30px 20px' }}>
+        <div className={` home-page ${darkClass} `}>
+            <div className="products-row">
                 {
                     props.prod.length <= 0 && (
-                        <div style={{ textAlign: 'center', width: '100%' }}>
-                            <h1 style={headText}>Nothing in Cart.. Please add items to shop..</h1>
-                            <Link to="/" style={linkStyle}>Go To Store</Link>
+                        <div className="info-sec">
+                            <h1 className="info-sec_text">Nothing in Cart.. Please add items to shop..</h1>
+                            <Link className="info-sec_link" to="/">Go To Store</Link>
                         </div>
                     )
                 }
                 {props.prod.map(product => (
-                    <div style={prodStyle} key={product.id}>
-                        <img style={prodImg} src={product.img} />
-                        <div>
-                            <p style={textStyle}>{product.name}</p>
-                        </div>
-                        <div>
-                            <p style={textStyle}>{product.price}</p>
-                        </div>
-                        <div style={counter}>
-                            <div style={counterBtn}>
-                                -
+                    <div className={` product-card ${darkProd} `} key={product.id}>
+                        <img src={product.img} />
+                        <div className="product-card_cont">
+                            <div>
+                                <h5 className="product-name">{product.name}</h5>
                             </div>
-                            <div style={counterDiv}>
-                                {product.countt.length}
+                            <div>
+                                <p className="product-price"><span>Price: </span>{product.price}</p>
                             </div>
-                            <div style={counterBtn} onClick={ () => incrementHandler(product) }>
-                                +
+                            <div className="product-cart_count">
+                                <button className="product-cart_count-btn">
+                                    -
+                                </button>
+                                <div className="product-count_num">
+                                    {product.countt.length}
+                                </div>
+                                <button className="product-cart_count-btn" onClick={ () => incrementHandler(product) }>
+                                    +
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -143,10 +152,10 @@ const Cart = (props) => {
             </div>
             {
                 props.prod.length > 0 && (
-                    <button type="button" style={btnCheckout}>Checkout</button>
+                    <Link to="/checkout" className="btn-checkout" onClick={ () => props.addToCheckoutHandler(products) }>Go To Checkout</Link>
                 )
             }
-        </>
+        </div>
     )
 }
 
@@ -162,6 +171,10 @@ const mapDispatch = dispatch => {
         productIncHandler: (product) => {
             console.log(product);
             dispatch({ type: actionType.INC_PROD, payload: product })
+        },
+        addToCheckoutHandler: (products) => {
+            console.log('check', products);
+            dispatch({ type: actionType.ADD_TO_CHECKOUT, payload: products })
         }
     }
 }

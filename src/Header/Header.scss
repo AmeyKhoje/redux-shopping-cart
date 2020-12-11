@@ -1,0 +1,92 @@
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    // background-color: #fff;
+    // box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.1);
+    .header-cont {
+        padding: 5px 12px;
+        display: flex;
+        align-items: center;
+        .header-brand {
+            width: max-content;
+            margin-right: auto;
+            // color: #000;
+            h1 {
+                margin: 0;
+            }
+        }
+        .header-list {
+            display: flex;
+            align-items: center;
+            list-style-type: none;
+            justify-content: center;
+            width: max-content;
+            margin-left: auto;
+            li {
+                margin: 0 12px;
+                a {
+                    // text-shadow: 3px 3px rgba(0,0,0,0.2);
+                    padding: 4px 22px;
+                    // background-color: #ccc;
+                    // color: #000;
+                    border-radius: 3px;
+                    // box-shadow: 3px 3px 10px rgba(0,0,0,0.15), -3px -3px 15px rgba(255, 255, 255, 0.5);
+                    font-size: 18px;
+                    position: relative;
+                    text-decoration: none;
+                    span {
+                        position: absolute;
+                        top: -10px;
+                        right: -15px;
+
+                        width: 25px;
+                        height: 25px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: #fff;
+                        color: #000;
+                        font-size: 14px;
+                        font-weight: 500;
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.header-light {
+    background-color: #fff;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.1);
+    .header-list {
+        li {
+            a {
+                background-color: #ccc;
+                box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.15);
+                color: #000;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.header-dark {
+    background-color: #272727;
+    box-shadow: 0px 3px 7px 0px rgba(255,255,255,0.15);
+    .header-brand {
+        color: #AFAFAF;
+    }
+    .header-list {
+        li {
+            a {
+                background-color: #363636;
+                box-shadow: 3px 3px 6px rgba(0,0,0,0.8), -2px -2px 4px rgba(255, 255, 255, 0.6);
+                color: #F3F3F3;
+                font-weight: 600;
+            }
+        }
+    }
+}

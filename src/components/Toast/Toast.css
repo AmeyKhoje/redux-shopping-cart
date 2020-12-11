@@ -1,0 +1,36 @@
+.react-toast {
+    position: fixed;
+    z-index: 99;
+    top: 70px;
+    right: 20px;
+    box-shadow:  8px 2px 50px rgba(255,255,255,0.2);
+    background: #39e124;
+    width: 400px;
+    max-width: 500px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.toast-show {
+    display: block;
+    display: flex;
+    align-items: center;
+}
+
+.toast-hide {
+    display: none;
+}
+
+.react-toast_cont {
+    padding: 0px 10px;
+    width: max-content;
+}
+
+.react-toast_cont p {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+}

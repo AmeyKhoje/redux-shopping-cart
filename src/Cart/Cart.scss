@@ -1,0 +1,30 @@
+.info-sec {
+    text-align: center;
+    .info-sec_text {
+        font-size: 24px;
+        font-weight: 600;
+        color: #000999;
+    }
+    .info-sec_link {
+        padding: 5px 20px;
+        background-color: #fff;
+        color: #098cc8;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 20px;
+        box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.1);
+    }
+}
+
+.btn-checkout {
+    padding: 7px 20px;
+    width: max-content;
+    text-decoration: none;
+    font-weight: 600;
+    background-color: #ff9cc9;
+    border-radius: 2px;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.1);
+    margin: 10px 0;
+    color: #9f0ff0;
+}
